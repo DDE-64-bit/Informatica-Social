@@ -77,24 +77,8 @@ Type vervolgens deze code (het commetaar is niet nodig, het kan wel handig zijn.
     return HttpResponse("Welkom bij deze enquête") # Stuur een http reactie terug
 ```
 
-Ga naar de folder met jouw project erin. Open de folder genaamd informatica.
+Ga naar de folder waar ook views.py staat.
 
-Open dan het bestand genaamd "urls.py", haal het commetaar weg.
+Maak daar een nieuw bestand aan met de naam "urls.py".
 
-Voeg dan deze code toe.
-
-```python
-  from . import views # Voeg het bestand views toe aan dit python bestand
-```
-
-In de list "urlpatterns" verwijder deze regel code.
-
-```python
-  path('admin/', admin.site.urls),
-```
-
-Voeg daar deze regel code aan toe.
-
-```python
-  path("", views.index, name="index"), # Van het bestand views voeg de functie index toe aan de webpagina
-```
+Open dat bestand in thonny
