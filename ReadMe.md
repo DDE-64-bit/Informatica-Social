@@ -21,7 +21,7 @@ Dan krijg je ook een zwart scherm.
 Nu je in dat terminal zit, type je dit commando.
 
 ```bash
-  python -m django startproject informatica
+  python -m django startproject mijnSite
 ```
 
 ## Open je website
@@ -80,5 +80,23 @@ Type vervolgens deze code (het commetaar is niet nodig, het kan wel handig zijn.
 Ga naar de folder waar ook views.py staat.
 
 Maak daar een nieuw bestand aan met de naam "urls.py".
+
+Open dat bestand in thonny en voeg deze code toe.
+
+```python
+  from django.urls import path
+
+  from . import views # Voeg "views.py" toe aan dit programma
+
+  urlpatterns = [
+    path("", views.index, name="index"), # Voeg de pagina 
+  ]
+```
+
+Nu ga je zorgen dat hij automatisch de functie index laad als je de site opent.
+
+Open ga naar de folder met de bestanden: "views.py" en "urls.py". Druk dan op het symbooltje met een pijltje recht omhoog, zodat je naar de bovenliggende folder gaat.
+
+Open dan de folder die "mijnSite" heet, daarin staat ook een  bestand genaamd "url.py". 
 
 Open dat bestand in thonny
