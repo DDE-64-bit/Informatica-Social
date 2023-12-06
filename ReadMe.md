@@ -29,10 +29,10 @@ Nu je in dat terminal zit, type je dit commando.
 Blijf nog even in de terminal, type dan het volgende commando in.
 
 ```bash
-  python manage.py startapp mijnProjectNaam
+  ren mijnSite django
+  cd django
+  python manage.py startapp mijnProject
 ```
-
-Vervang "mijnProjectNaam" voor de naam van jouw website.
 
 Nu maak je van alle losse vooraf gegenereerde python bestanden één geheel.
 
@@ -49,11 +49,11 @@ Om de server uit te zetten druk de toetsen ctrl + c in.
 
 ## Bewerk jouw website
 
-Nu ga jij de website personaliseren. Eerst moet je naar windows verkenner en dan naar de folder met jouw project erin.
+Nu ga jij de website aanpassen. Open de folder django.
 
 Als het goed is zie je dan 2 folders, 1 python bestand en een database bestand. 
 
-Open de map met "mijnProjectNaam". Dan heb je 1 folder en 6 python bestanden.
+Open de folder die mijnProject heet. Dan heb je 1 folder en 6 python bestanden.
 
 Open het bestand "views.py" met thonny.
 
@@ -77,7 +77,7 @@ Type vervolgens deze code (het commetaar is niet nodig, het kan wel handig zijn.
     return HttpResponse("Welkom bij deze enquête") # Stuur een http reactie terug
 ```
 
-Ga naar de folder waar ook views.py staat.
+Ga terug naar de folder die mijnProject heet.
 
 Maak daar een nieuw bestand aan met de naam "urls.py".
 
@@ -94,7 +94,7 @@ Open dat bestand in thonny en voeg deze code toe.
 
 Nu ga je zorgen dat hij automatisch de functie index laad als je de site opent.
 
-Open ga naar de folder met de bestanden: "views.py" en "urls.py". Druk dan op het symbooltje met een pijltje recht omhoog, zodat je naar de bovenliggende folder gaat.
+Ga naar de folder "django"
 
 Open dan de folder die "mijnSite" heet, daarin staat ook een  bestand genaamd "url.py". 
 
@@ -104,10 +104,10 @@ Type deze code in
 
 ```python
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path # Voeg de url van
 
 urlpatterns = [
-    path('', include('mijnProjectNaam.urls')),  # Dit zorgt ervoor dat het script p
+    path('', include('mijnProject.urls')),  # Dit zorgt ervoor dat het script urls word geimporteerd
     path('admin/', admin.site.urls),
 ]
 ```
