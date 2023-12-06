@@ -59,7 +59,7 @@ Open het bestand "views.py" met thonny.
 
 In het bestand staat dit.
 
-```bash
+```python
   from django.shortcuts import render
 
   # Create your views here.
@@ -85,7 +85,6 @@ Open dat bestand in thonny en voeg deze code toe.
 
 ```python
   from django.urls import path
-
   from . import views # Voeg "views.py" toe aan dit programma
 
   urlpatterns = [
@@ -99,4 +98,16 @@ Open ga naar de folder met de bestanden: "views.py" en "urls.py". Druk dan op he
 
 Open dan de folder die "mijnSite" heet, daarin staat ook een  bestand genaamd "url.py". 
 
-Open dat bestand in thonny
+Open dat bestand in thonny.
+
+Type deze code in
+
+```python
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path('', include('mijnProjectNaam.urls')),  # Dit zorgt ervoor dat het script p
+    path('admin/', admin.site.urls),
+]
+```
