@@ -232,4 +232,45 @@ Dan moet je de juiste liberys download/update. dat doe je zo:
 py manage.py migrate
 ```
 
+vervang de members view door:
 
+```python
+def members(request):
+  template = loader.get_template('index.html')
+  return HttpResponse(template.render())
+```
+
+Start dan de je project met dit comman:
+```bash
+py manage.py runserver
+```
+
+Nu hebben wij alleen maar vaste html code laten zien, in django kan je ook data uit een database weergeven, die data heet in django models.
+
+
+ga open het bestand models.py. Maak daar een class aan met de naam "Member" geef als waarde models.Model mee.
+
+Voeg daar op deze manier een model toe:
+
+```python
+voorNaam = models.CharField(max_length=255)
+```
+
+Doe dit op dezelfde manier voor achterNaam.
+
+
+Run dit command om de database aan te passen
+```bash
+py manage.py makemigrations members
+```
+
+Nu is er een migrations folder in de map van models.py
+
+Open het bestand dat "0001_initial.py" heet.
+
+Daar zie je dat django automatisch een colorm id heeft aangemaakt.
+
+run dit command om de database te updaten
+```bash
+py manage.py migrate
+```
