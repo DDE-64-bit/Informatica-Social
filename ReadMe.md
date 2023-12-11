@@ -226,8 +226,10 @@ open social/settings.py. dit is een vol bestand schrik niet zoek de list genaamd
 voeg daar 'members' aan toe
 
 
-Dan moet je de juiste liberys downloaden. dat doe je zo:
+Dan moet je de juiste liberys download/update. dat doe je zo:
 
 ```bash
 py manage.py migrate
 ```
+
+
