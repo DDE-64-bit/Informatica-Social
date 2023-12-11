@@ -111,3 +111,123 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 ```
+
+
+
+python --version
+pip --version
+python -m install django
+//create django thing
+
+python -m django startproject social
+
+social
+    manage.py
+    social/
+        __init__.py
+        asgi.py
+        settings.py
+        urls.py
+        wsgi.py
+
+python manage.py runserver 4000
+
+py manage.py startapp members
+
+socail
+    manage.py
+    social/
+    members/
+        migrations/
+            __init__.py
+        __init__.py
+        admin.py
+        apps.py
+        models.py
+        tests.py
+        views.py
+
+/members/views.py:
+  vervang alles met dit:
+```python
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def members(request):
+    return HttpResponse("Hello world!")
+```
+
+def members heet members omdat het over de app members gaat.
+
+
+als je app of view aanmaakt dan heb je ook een bijbehorende url nodig
+
+
+maak een bestand genaamt urls.py in de folder members. typ daar deze code
+/members/urls.py:
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('members/', views.members, name='members'),
+]
+```
+
+dit zorgt ervoor dat er een path is genaamd localhost:4000/members. en dat die een view met de naam members laat zien
+
+ga dan naar je hooft map waar manage.py in staat. ga dan naar de folder die social heet.
+
+zorg dat dit element word geimporteerd:"from django.urls import include, path"
+
+voeg aan urlpatterns dit toe: "path('', include('members.urls')),"  
+
+als je nu de command python manage.py runserver 4000 uitvoert en dan 
+
+localhost:4000/members opzoekt krijg je hello world te zien
+
+maak een template folder in de members folder.
+maak daar een bestand genaamd index.html
+
+index is de standaart naam voor een html pagina.
+
+voeg daar deze standaard html code in:
+
+
+// eigen notitie voeg comments toe
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello world</h1>
+    <p>Welkom op mijn members pagina</p>
+</body>
+</html>
+```
+
+ga dan naar views.py en voeg deze code toe om de index.html pagina te laden wanneer de view members word gebruikt.
+
+import dit"from django.template import loader"
+
+en voeg deze regel toe aan def member():
+```python
+template = loader.get_template('index.html')
+```
+
+wat dit doet is het maakt een variable voor de template. en gebruikt de libery loader om index.html te laden.
+
+open social/settings.py. dit is een vol bestand schrik niet zoek de list genaamd INSTALD_APPS.
+
+voeg daar 'members' aan toe
+
+
+Dan moet je de juiste liberys downloaden. dat doe je zo:
+
+```bash
+py manage.py migrate
+```
