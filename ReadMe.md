@@ -274,3 +274,4 @@ run dit command om de database te updaten
 ```bash
 py manage.py migrate
 ```
+
