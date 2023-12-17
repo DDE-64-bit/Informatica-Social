@@ -275,3 +275,36 @@ run dit command om de database te updaten
 py manage.py migrate
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create project, stappen staan hierboven social1
+
+create app core
+run project
+
+URL ROUTING
+
+in /core maak een bestand genaamt urls.py
+
+```python
+from django.urls import path
+
+urlpatterns = [
+    path('', views.index, name=index)
+]
+```
+
+open views.py
