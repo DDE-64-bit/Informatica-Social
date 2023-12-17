@@ -301,10 +301,87 @@ in /core maak een bestand genaamt urls.py
 
 ```python
 from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('', views.index, name=index)
+    path('', views.index, name='index')
 ]
 ```
 
 open views.py
+
+voeg dit toe
+```python
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("<h1>Welkom op Het Streek sociaal</h1>")
+```
+
+ga naar /social1/urls.pys
+
+zorg dat dit er staat:
+
+```python
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('core.urls'))
+]
+```
+
+test of het werkt.
+
+open social1/settings.py
+
+import os
+voeg aan installed apps de app 'core' toe
+
+zoek templates
+
+maak dan een folder genaamt templates toe aan de map waar ook manage.py in staat.
+
+vul bij dit: 'DIRS': [],
+
+dit in: 'DIRS': [os.path.join(BASE_DIR, 'templates')],
+
+stop dan alle gedownloade html bestaden in de map templates.
+
+- index
+- profile
+- settings
+- signin
+- signup
+
+ga terug naar /core/views.py
+
+vervang dit: return HttpResponse("<h1>Welkom op Het Streek sociaal</h1>")
+
+voor dit: return render(request, "index.html")
+
+
+kijk op de website. als het goed is zie je nu iets anders, maar het ziet er niet goed uit.
+
+
+
+naast de folder templates maken wij nu ook een folder genaamt static aan.
+
+ga terug naar /social1/setting.py
+
+onder: STATIC_URL = 'static/' 
+
+voeg dit toe: 
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
+voeg de andere gedownloade bestanden toe.
+- assets
+- css
+- fonts
+- images
+- js
+- settings
+- video
