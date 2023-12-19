@@ -435,3 +435,32 @@ class Profile(models.Model):
 
 nu gaan we de database migreren.
 
+run dan nu de commando: python manage.py makemigrations
+python manage.py migrate
+
+open /core/admin.py
+
+voeg deze code toe:
+from .models import Profile
+
+admin.site.register(Profile)
+
+
+
+
+admin account maken.
+
+python manage.py createsuperuser
+
+zet de server nu aan
+
+kijk op jouw site op de url localhost:4000/admin
+
+log in met jouw zojuist aangemaakte gegevens
+
+druk dan op profiles. als het goed is zie je nog geen profielen
+
+
+aanmelden
+
+
