@@ -385,3 +385,32 @@ voeg de andere gedownloade bestanden toe.
 - js
 - settings
 - video
+
+!! 32.39
+
+open index.html
+
+open /core/models.py
+
+ga naar de hoofd map en maak daar een folder aan genaamd: media
+
+open settings.py
+
+voeg onderaan dit bestand deze code toe: 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+open nu het bestand /social1/urls.py
+
+import deze liberys: 
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+voeg ook deze regel in: urlpatterns = urlpatterns+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+ga terug naar models.py
+
+!! 45:29
