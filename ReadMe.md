@@ -410,7 +410,28 @@ from django.conf.urls.static import static
 
 voeg ook deze regel in: urlpatterns = urlpatterns+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+verplaats: blank-profile-picture.png naar de /media folder
+
 
 ga terug naar models.py
 
-!! 45:29
+voeg deze code in:
+
+from django.db import models
+from django.contrib.auth import get_user_model
+
+user = get_user_model()
+
+class Profile(models.Model):
+    user = models.ForeignKey(user, on_delete=models.CASCADE)
+    id_user = models.IntegerField()
+    bio = models.TextField(blank=True)
+    profileimg = models.ImageField(upload_to="profile_images", default="blank-profile-picture.png")
+    location = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        return self.user.username
+
+
+nu gaan we de database migreren.
+
