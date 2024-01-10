@@ -396,12 +396,4 @@ jQuery(".post-comt-box textarea").on("keydown", function(event) {
 		$(this).parent().toggleClass('active');
 		return false;
 	});	
-	
-
-
 });//document ready end
-
-
-
-
-
