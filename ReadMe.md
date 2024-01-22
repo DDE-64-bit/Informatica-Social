@@ -53,7 +53,7 @@ maak dan een folder genaamt templates toe aan de map waar ook manage.py in staat
 
 vul bij dit: 'DIRS': [],
 
-dit in: 'DIRS': [os.path.join(BASE_DIR, 'templates')],
+dit in: 'DIRS': [os.path.join(BASE_DIR, 'templates')],  
 
 stop dan alle gedownloade html bestaden in de map templates.
 
