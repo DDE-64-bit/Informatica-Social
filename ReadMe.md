@@ -234,3 +234,27 @@ druk dan op profiles. zie jij jouw account staan?
 
 ga naar core/views.py
 
+
+
+signin and login
+
+ga naar core/urls.py
+
+voeg deze url toe aan de urlpatterns:
+path("signin", views.signin, name="signin"),
+
+ga naar /core/views.py
+
+en voeg deze view toe:
+
+def signin(request):
+    return render(request, "signin.thml")
+
+ga nu eens naar de pagina die je zojuist hebt aangemaakt.
+
+oke, ga nu weer terug naar je views.py
+
+        maak dan een if else functie die kijkt of de request method gelijk is aan POST (kijk terug bij de signup view als jee het niet meer weet)
+"vraag docent of bovenstaande goed is"
+
+
