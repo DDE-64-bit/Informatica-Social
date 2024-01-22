@@ -176,5 +176,16 @@ aanmelden
 
 open /core/urls.py
 
-TO DO:
-- upload database users
+voeg daar deze regel aan toe in urlpatterns.
+path('signup', views.signup, name='signup'),
+
+open /core/views.py
+
+voeg deze functie toe: 
+def signup(request):
+    return render(request, 'signup.html')
+
+start nu je server en ga naar 127.0.0.1:4000/signup zie je iets?
+
+ga naar core/views.py
+
