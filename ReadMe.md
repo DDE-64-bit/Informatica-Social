@@ -256,5 +256,27 @@ oke, ga nu weer terug naar je views.py
 
         maak dan een if else functie die kijkt of de request method gelijk is aan POST (kijk terug bij de signup view als jee het niet meer weet)
 "vraag docent of bovenstaande goed is"
+zo niet dan dit
+
+
+voeg deze view toe aan /core/views.py
+
+def signin(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None: # kijkt of de user bestaat
+            auth.login(request, user)
+            return redirect("/")
+        else:
+            messages.info(request, "Credentials Invalid")
+            return redirect("signin")
+        
+    else:
+        return render(request, "signin.html")
+
 
 
