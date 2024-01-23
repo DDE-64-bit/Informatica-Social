@@ -280,4 +280,33 @@ def signin(request):
 
 
 
+
+maak een nieuw url aan voor logout
+doe dat zo: 
+
+path("logout", views.logout, name="logout"),
+
+ga naar core/views.py
+
+voeg daar deze simpele functie aan toe:
+def logout(request):
+    auth.logout(request)
+    return redirect("signin")
+
+sla op en ga naar jouw webpagina, druk op jouw profiel foto (rechts boven) en dan logout
+
+maar nu kan je nog steeds op de hoofdsite als je bent uitgelogd, dat gaan wij veranderen.
+
+importeer deze libery:
+from django.contrib.auth.decorators import login_required
+
+in /core/views.py
+
+voeg dan deze code toe aan de regel direct boven def index() en boven def logout():
+@login_required(login_url="signin")
+
+
+probeer nu eens naar de main page te gaan. als dat lukt druk dan op logout, als het goed is word je gevraagt om in te loggen.
+
+
 14324
