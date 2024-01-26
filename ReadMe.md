@@ -203,8 +203,7 @@ def signup(request):
                 user.save()
 
                 #log user in and redirect to settings page
-                user_login = auth.authenticate(username=username, password=password)
-                auth.login(request, user_login)
+                # komt later
 
                 #create a Profile object for the new user
                 user_model = User.objects.get(username=username)
@@ -309,4 +308,28 @@ voeg dan deze code toe aan de regel direct boven def index() en boven def logout
 probeer nu eens naar de main page te gaan. als dat lukt druk dan op logout, als het goed is word je gevraagt om in te loggen.
 
 
-14324
+
+
+Account settings:
+
+ga naar /core/urls.py
+
+maak daar een url aan met de naam settings
+
+ga dan naar views.py en maak daar een settings view:
+
+@login_required
+def settings(request):
+    return render(request, "settings.html")
+
+
+ga nu naar de functie van de view signup. voeg waar je eerst # komt later had ingevult dit toe: 
+    user_login = auth.authenticate(username=username, password=password)
+    auth.login(request, user_login)
+
+en verander nog steeds in hetzelfde deel van de if-else functie de 
+
+return redirect('signup')
+
+naar:
+return redirect('settings')

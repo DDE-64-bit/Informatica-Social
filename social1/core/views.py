@@ -69,3 +69,7 @@ def signin(request):
 def logout(request):
     auth.logout(request)
     return redirect("signin")
+
+@login_required
+def settings(request):
+    return render(request, "setting.html")
