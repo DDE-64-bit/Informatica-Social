@@ -309,7 +309,7 @@ probeer nu eens naar de main page te gaan. als dat lukt druk dan op logout, als 
 
 
 
-
+    	
 Account settings:
 
 ga naar /core/urls.py
