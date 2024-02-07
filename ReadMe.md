@@ -1,3 +1,9 @@
+pip install django
+
+django-admin startproject social
+django-admin startapp core
+
+
 create project, stappen staan hierboven social1
 
 create app core
@@ -23,7 +29,7 @@ voeg dit toe
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse("<h1>Welkom op Het Streek sociaal</h1>")
+    return HttpResponse("<h1>Welkom op mijn webpagina</h1>")
 ```
 
 ga naar /social1/urls.pys
