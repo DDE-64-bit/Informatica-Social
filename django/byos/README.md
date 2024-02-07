@@ -207,3 +207,13 @@ Nu kan je naar w3schools gaan en zelf oefenen met html en css. Je hoeft niet all
 * [Bestanden Locatie](https://www.w3schools.com/html/html_filepaths.asp)
 * [Externe css (css)](https://www.w3schools.com/css/css_howto.asp)
 * [Marge (css)](https://www.w3schools.com/css/css_margin.asp)
+* [Tekst (css)](https://www.w3schools.com/css/css_text.asp)
+
+<br>
+
+**Tip: Er staat bij w3schools vaak een "Try it Yourself" knop, daar kan makkelijk oefenen met html en css.**
+
+
+!!! overleg dit eerst met docent !!!
+
+Als je html en css door denkt te hebben, probeer dan een mooie thuispagina te maken voor jouw site. Kies een leuk thema uit voor jouw site (probeer creatief te zijn).
