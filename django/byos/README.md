@@ -1,3 +1,6 @@
+<h1>Project opzetten</h1>
+
+
 django-admin startproject "projectname"
 
 django-admin startapp core
@@ -110,7 +113,7 @@ Vervang dan de regel:
 Voor:
 
 ```python
-'DIRS': [os.path.join(BASE_DIR, 'templates')],
+"DIRS": [os.path.join(BASE_DIR, "templates")],
 ```
 
 Ga dan naar de bovenkant van het script, importeer daar deze libery.
@@ -118,3 +121,89 @@ Ga dan naar de bovenkant van het script, importeer daar deze libery.
 ```python
 import os
 ```
+
+Zoek de list "INSTALLED_APPS" op voeg onderaan deze list dit toe.
+
+``` python
+"core",
+```
+
+
+Ga terug naar jouw terminal, probeer nu eens zelf in de folder templates te komen.
+
+Als dat is gelukt dan ga je een bestand aanmaken via de cli (terminal), dat doe je zo.
+
+``` bash
+touch index.html
+```
+
+Daarna ga je het bestand openen, dat kan ook via de cli.
+
+``` bash
+code index.html
+```
+
+Als het geopend is, druk dan op ! en daarna meteen tab of enter. Dan verschijnd er een stuk code, dit is html.
+
+
+Open nu het bestand /{projectnaam}/urls.py.
+
+Importeer deze libery's.
+
+```python
+from django.conf import settings
+from django.conf.urls.static import static
+```
+
+En verander deze regel.
+
+```python
+from django.urls import path
+```
+
+Naar dit
+
+```python
+from django.urls import path, include
+```
+
+Voeg aan urlpatterns dit path toe.
+
+```python
+path('', include('core.urls'))
+```
+
+Start nu je site op, als alles goed is gegaan zie je nu een lege pagina.
+
+<br><br>
+
+<h1>HTML/CSS</h1>
+Nu kan je naar w3schools gaan en zelf oefenen met html en css. Je hoeft niet alles te weten hieronder heb je links naar alle belangerijke onderwerpen.
+
+<br>
+
+<h3>Deze zijn nodig om te weten:</h3>
+
+* [Koptitels](https://www.w3schools.com/html/html_headings.asp)
+* [Paragrafen](https://www.w3schools.com/html/html_paragraphs.asp)
+* [Stijlen](https://www.w3schools.com/html/html_formatting.asp)
+* [Afbeeldingen](https://www.w3schools.com/html/html_images.asp)
+* [Titel](https://www.w3schools.com/html/html_page_title.asp)
+* [Div](https://www.w3schools.com/html/html_div.asp)
+* [Formulieren](https://www.w3schools.com/html/html_forms.asp)
+* [Syntax (css)](https://www.w3schools.com/css/css_syntax.asp)
+* [Kleuren (css)](https://www.w3schools.com/css/css_colors.asp)
+* [Achtergrond (css)](https://www.w3schools.com/css/css_background.asp)
+* [Hoogte/Breedte (css)](https://www.w3schools.com/css/css_dimension.asp)
+* [Formulieren (css)](https://www.w3schools.com/css/css_form.asp)
+
+
+
+<h3>Voor extra verdieping</h3>
+
+* [Commentaar](https://www.w3schools.com/html/html_comments.asp)
+* [Favicon](https://www.w3schools.com/html/html_favicon.asp)
+* [Lay-out](https://www.w3schools.com/html/html_layout.asp)
+* [Bestanden Locatie](https://www.w3schools.com/html/html_filepaths.asp)
+* [Externe css (css)](https://www.w3schools.com/css/css_howto.asp)
+* [Marge (css)](https://www.w3schools.com/css/css_margin.asp)
