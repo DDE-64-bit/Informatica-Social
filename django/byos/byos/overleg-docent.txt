@@ -1,0 +1,3 @@
+- classes
+- leerlingen kiezen eigen thema, moet iets zijn waarvoor een database eraan 
+  gekoppeld kan woorden

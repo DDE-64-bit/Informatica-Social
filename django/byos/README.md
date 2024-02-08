@@ -50,6 +50,14 @@ cd {projectnaam}
 ```
 Nu gebruik je het cd commando, dat staat voor change directory. Je gaat dus naar een andere folder via de commandline. 
 
+Nu heb je een stap die je niet vaak hoeft te doen, dat is je database migreren. Dat doe je door dit commando in te vullen.
+
+```bach
+python manage.py migrate
+```
+
+Voer nu het laatste commando uit om de server te starten.
+
 ```bash
 python manage.py runserver 4000
 ```
@@ -217,3 +225,117 @@ Nu kan je naar w3schools gaan en zelf oefenen met html en css. Je hoeft niet all
 !!! overleg dit eerst met docent !!!
 
 Als je html en css door denkt te hebben, probeer dan een mooie thuispagina te maken voor jouw site. Kies een leuk thema uit voor jouw site (probeer creatief te zijn).
+
+
+<br><br>
+
+<h1>Databases</h1>
+
+<h3>Inloggen en registreren</h3>
+
+Maak eerst een html pagina met een formulier met de velden username en password, zorg dat er ook een submit knop is.
+
+Als je die in jouw template map hebt staan met de naam login.html.
+
+Zorg dat bij de tag form het atribuut action leeg is en dat je het atribuut method="post" toegevoegd is.
+
+Dan zou het er ongeveer zo uitziet (wel opgemaakt met css).
+
+```html
+<form action="" method="POST">
+    <input type="text" name="username" placeholder="Gebruikersnaam">
+    <input type="password" name="password" placeholder="Wachtwoord">
+
+    <button type="submit">Login</button>
+    <div>
+        <p> Niet geregistreerd? <a href="/aanmelden"> Create a account </a></p>
+    </div>
+</form>
+```
+
+**LET OP: Zorg dat de name="" gelijk is met de bovenstaande stukje code, ander krijg je daar problemen mee.**
+
+Voeg daarna onder de tag form deze regel toe, dit is van groot belang omdat dit voorkomt dat jouw website kwetsbaar is voor [Cross-Site Request Forgery](https://owasp.org/www-community/attacks/csrf).
+
+
+```html
+{% csrf_token %}
+```
+
+Oke nu gaan we terug naar /core/urls.py, voeg deze regel toe aan urlpatterns.
+
+```pyhton
+path('login', views.login, name='login'),
+```
+
+Ga dan naar /core/views.py. Maak daar een nieuwe functie aan met de naam login, die als parameter request heeft.
+
+Return dan de webpagina met de functie render, net zoals bij def index().
+
+Als je dat hebt gedaan kan je nu jouw website opstarten. Wanneer de website is opgestart ga dan naar jouw site, vul dan in de url bar achter het adres van jouw site /login in en druk op enter. 
+
+Dan zie je de login pagina.
+
+Als je op de submit knop drukt zie als het goed is in jouw terminal iets zoals dit staan.
+
+```bash
+[**/***/**** **:**:**] "POST /login HTTP/1.1" 200 699
+```
+
+Op de sterretjes staat de datum en tijd.
+
+Als jouw formulier geen POST maar een GET geeft, dan ben je vergeten om je method naar POST te veranderen (kijk dan terug hoe je dat moet doen).
+
+
+Maak nu een html bestand voor het aanmeleden, zorg dat je de velden username, mail, password en repeat password hebt. 
+
+Als je dat hebt ziet je code er ongeveer zo uit (wel met css).
+
+```html
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Gebruikersnaam">
+    <input type="email" name="email" placeholder="Mail">
+    <input type="password" name="password" placeholder="Wachtwoord"">
+    <input type="password" name="password2" placeholder="Herhaal wachtwoord">
+
+    <button type="submit">Sign Up</button>
+    <div>
+        <p> Heb je al een account? <a href="/login"> Login </a></p>
+    </div>
+</form>
+```
+
+**LET OP: Zorg dat de name="" gelijk is met de bovenstaande stukje code, ander krijg je daar problemen mee.**
+
+
+Nu gaan je weer naar /core/urls.py, voeg daar een path toe voor aanmelden.
+
+Ga dan naar /core/models.py, importeer daar deze libery.
+
+```python
+from django.contrib.auth import get_user_model
+```
+
+Voeg daarna deze code toe.
+
+```python
+user = get_user_model()
+```
+
+Dit maakt een variable aan die user heet en die is gelijk aan de return van get_user_model(), dat is de standaart inlog functie van django. Maak daaronder een class aan die er zo uitziet.
+
+```python
+class Profile(models.Model):
+    user = models.ForeignKey(user, on_delete=models.CASCADE)
+    id_user = models.IntegerField()
+    
+    def __str__(self):
+        return self.user.username
+```
+
+Ga daarna naar views.py, voeg daar deze code toe.
+
+```python
+
+```
