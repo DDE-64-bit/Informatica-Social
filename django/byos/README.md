@@ -337,5 +337,103 @@ class Profile(models.Model):
 Ga daarna naar views.py, voeg daar deze code toe.
 
 ```python
+def aanmelden(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
 
+        if password == password2:
+            if User.objects.filter(email=email).exists():
+                messages.info(request, 'Gegevens zijn verkeerd')
+                return redirect('aanmelden')
+            elif User.objects.filter(username=username).exists():
+                messages.info(request, 'Gegevens zijn verkeerd')
+                return redirect('login')
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password)
+                user.save()
+
+                #log user in and redirect to settings page
+                user_login = auth.authenticate(username=username, password=password)
+                auth.login(request, user_login)
+
+                #create a Profile object for the new user
+                user_model = User.objects.get(username=username)
+                new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
+                new_profile.save()
+                return redirect('login')
+        else:
+            messages.info(request, 'Wachtwoorden verschillen')
+            return redirect('aanmelden')
+        
+    else:
+        return render(request, 'aanmelden.html')
+```
+
+Wat dit doet is het kijkt of er een formulier is ingevuld en als dat is kijk hij naar de gegevens die mee gestuurd worden.
+
+Importeer ook models.py in views.py.
+
+```python
+from .models import Profile
+```
+
+Zoals je misschien is opgevallen zie je dat er 3 regels code in staan die met messages.info() werken. Zo kan je een error of een melding aan de user laten zien.
+
+Voeg boven beide formulieren (van aanmelden.html en login.html) dit stukje code toe.
+
+```html
+<div>
+    <style>
+        h5{
+            color: red;
+        }
+    </style>
+    {% for message in messages %}
+    <h5>{{message}}</h5>
+    {% endfor %}
+</div>
+```
+
+Dit zorgd dat je vanuit jouw python code een bericht kan laten zien.
+
+Voordat alle database veranderingen zijn doorgevoerd moeten er nog 2 commando's worden uitgevoerd in de cli.
+
+```bash
+python manage.py makemigrations
+```
+
+Dit zorgt dat de instellingen worden opgeslagen.
+
+```bash
+python manage.py migrate
+```
+
+Dit zorgt ervoor dat het word geupdate naar jouw site.
+
+Start nu jouw website ga dan naar /aanmelden. vul dan wat gegevens in. Als de gegevens goed zijn ben je nu op de login pagina, zo niet dan zie je een rood tekstje verschijnen met een fout melding.
+
+Nu moeten wij nog zorgen dat je ook kan inloggen.
+
+Voeg deze code toe aan /core/views.py.
+
+```python
+def signin(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None: # kijkt of de user bestaat
+            auth.login(request, user)
+            return redirect("/")
+        else:
+            messages.info(request, "Credentials Invalid")
+            return redirect("signin")
+        
+    else:
+        return render(request, "signin.html")
 ```

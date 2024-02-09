@@ -7,6 +7,6 @@ user = get_user_model()
 class Profile(models.Model):
     user = models.ForeignKey(user, on_delete=models.CASCADE)
     id_user = models.IntegerField()
-    
+
     def __str__(self):
         return self.user.username

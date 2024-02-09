@@ -6,6 +6,17 @@
     <title>Aanmelden</title>
 </head>
 <body>
+    <div>
+        <style>
+            h5{
+                color: red;
+            }
+        </style>
+        {% for message in messages %}
+        <h5>{{message}}</h5>
+        {% endfor %}
+    </div>
+    
     <form action="" method="POST">
         {% csrf_token %}
         <input type="text" name="username" placeholder="Gebruikersnaam">
