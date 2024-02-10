@@ -9,11 +9,11 @@ ga naar /core en maak het bestand urls.py
 
 voeg deze code toe aan het bestand /core/urls.py
 ``` python
-from django.urls import path
-from . import views
+from django.urls import path # Om url's te gaan gebruiken
+from . import views # Alle views importeren
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.index, name='index'), # Zorgt dat de hoofd pagina index.html laat zien
 ]
 ```
 
@@ -25,20 +25,20 @@ ga  nu naar /core/views.py.
 importeer deze libery's.
 
 ```python
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render # Om html te laden
+from django.http import HttpResponse # Om html reacties te krijgen van de gebruiker
 
-from django.shortcuts import redirect
-from django.contrib .auth.models import User, auth
-from django.contrib import messages
+from django.shortcuts import redirect # Om door te verwijzen
+from django.contrib .auth.models import User, auth # Om in te loggen
+from django.contrib import messages # Om vanaf python een bericht in html laten zien
 ```
 
 
 Voeg dan deze code toe om een view te maken.
 
 ```python
-def index(request):
-    return render(request, "index.html")
+def index(request): # Maak een functie met de naam van de url, geef altijd een request mee (anders werkt het niet)
+    return render(request, "index.html") # Wanneer de functie word aangeroepen (de url word geladen) stuur dan de site index.html terug
 ```
 
 Nu heb je door middel van een functie een 'view' aangemaakt, dat is een webpagina. We komen later nog terug op wat al die request en renders doen.
@@ -121,19 +121,19 @@ Vervang dan de regel:
 Voor:
 
 ```python
-"DIRS": [os.path.join(BASE_DIR, "templates")],
+"DIRS": [os.path.join(BASE_DIR, "templates")], # Dit laat jouw site weten waar de html pagina's staan
 ```
 
 Ga dan naar de bovenkant van het script, importeer daar deze libery.
 
 ```python
-import os
+import os # Om bij je bestanden te kunnen
 ```
 
 Zoek de list "INSTALLED_APPS" op voeg onderaan deze list dit toe.
 
 ``` python
-"core",
+"core", # Om de app core te laden
 ```
 
 
@@ -159,8 +159,8 @@ Open nu het bestand /{projectnaam}/urls.py.
 Importeer deze libery's.
 
 ```python
-from django.conf import settings
-from django.conf.urls.static import static
+from django.conf import settings # Om de goede instellingen te hebben
+from django.conf.urls.static import static # Om eventueel externe scripten te laden
 ```
 
 En verander deze regel.
@@ -172,13 +172,13 @@ from django.urls import path
 Naar dit
 
 ```python
-from django.urls import path, include
+from django.urls import path, include # Om extern url's op te halen
 ```
 
 Voeg aan urlpatterns dit path toe.
 
 ```python
-path('', include('core.urls'))
+path('', include('core.urls')) # Url's ophalen
 ```
 
 Start nu je site op, als alles goed is gegaan zie je nu een lege pagina.
@@ -242,13 +242,13 @@ Zorg dat bij de tag form het atribuut action leeg is en dat je het atribuut meth
 Dan zou het er ongeveer zo uitziet (wel opgemaakt met css).
 
 ```html
-<form action="" method="POST">
-    <input type="text" name="username" placeholder="Gebruikersnaam">
-    <input type="password" name="password" placeholder="Wachtwoord">
+<form action="" method="POST"> <!--Gebruik POST voor extra veiligheid-->
+    <input type="text" name="username" placeholder="Gebruikersnaam"> <!--Gebruikersnaam veld-->
+    <input type="password" name="password" placeholder="Wachtwoord"> <!--Wachtwoord veld-->
 
-    <button type="submit">Login</button>
+    <button type="submit">Login</button> <!--Knop om formulier in te sturen-->
     <div>
-        <p> Niet geregistreerd? <a href="/aanmelden"> Create a account </a></p>
+        <p> Niet geregistreerd? <a href="/aanmelden"> Create a account </a></p> <!--Link naar aanmeldings pagina-->
     </div>
 </form>
 ```
@@ -259,13 +259,13 @@ Voeg daarna onder de tag form deze regel toe, dit is van groot belang omdat dit 
 
 
 ```html
-{% csrf_token %}
+{% csrf_token %} <!--Om CSRF te voorkomen-->
 ```
 
 Oke nu gaan we terug naar /core/urls.py, voeg deze regel toe aan urlpatterns.
 
-```pyhton
-path('login', views.login, name='login'),
+```python
+path('login', views.login, name='login'), # Maak een nieuwe url aan voor jouw site
 ```
 
 Ga dan naar /core/views.py. Maak daar een nieuwe functie aan met de naam login, die als parameter request heeft.
@@ -293,15 +293,15 @@ Als je dat hebt ziet je code er ongeveer zo uit (wel met css).
 
 ```html
 <form action="" method="POST">
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Gebruikersnaam">
-    <input type="email" name="email" placeholder="Mail">
-    <input type="password" name="password" placeholder="Wachtwoord"">
-    <input type="password" name="password2" placeholder="Herhaal wachtwoord">
+    {% csrf_token %} <!--Tegen CSRF-->
+    <input type="text" name="username" placeholder="Gebruikersnaam"> <!--Gebruikersnaam veld-->
+    <input type="email" name="email" placeholder="Mail"> <!--Mail veld-->
+    <input type="password" name="password" placeholder="Wachtwoord""> <!--Wachtwoord veld-->
+    <input type="password" name="password2" placeholder="Herhaal wachtwoord"> <!--Herhaal wachtwoord veld-->
 
-    <button type="submit">Sign Up</button>
+    <button type="submit">Sign Up</button> <!--Inschrijf knop-->
     <div>
-        <p> Heb je al een account? <a href="/login"> Login </a></p>
+        <p> Heb je al een account? <a href="/login"> Login </a></p> <!--Link naar login pagina-->
     </div>
 </form>
 ```
@@ -314,39 +314,39 @@ Nu gaan je weer naar /core/urls.py, voeg daar een path toe voor aanmelden.
 Ga dan naar /core/models.py, importeer daar deze libery.
 
 ```python
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model # Om de standaart user database te importeren
 ```
 
 Voeg daarna deze code toe.
 
 ```python
-user = get_user_model()
+user = get_user_model() # Om bij het usermodel te komen
 ```
 
 Dit maakt een variable aan die user heet en die is gelijk aan de return van get_user_model(), dat is de standaart inlog functie van django. Maak daaronder een class aan die er zo uitziet.
 
 ```python
-class Profile(models.Model):
-    user = models.ForeignKey(user, on_delete=models.CASCADE)
-    id_user = models.IntegerField()
+class Profile(models.Model): # Maak een class om Profielen te maken
+    user = models.ForeignKey(user, on_delete=models.CASCADE) # Voeg een gebruikers veld toe
+    id_user = models.IntegerField() # Voeg een id veld toe
     
     def __str__(self):
-        return self.user.username
+        return self.user.username # Stuur de hele gebruiker terug
 ```
 
 Ga daarna naar views.py, voeg daar deze code toe.
 
 ```python
-def aanmelden(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
+def aanmelden(request): # View voor aanmelden
+    if request.method == 'POST': # Gebruik POST voor veiligheid
+        username = request.POST['username'] # Link het invoer veld username aan de gebruikersnaam
+        email = request.POST['email'] # Link het invoer veld email aan de mail
+        password = request.POST['password'] # Link het invoer veld password aan het wachtwoord
         password2 = request.POST['password2']
 
-        if password == password2:
-            if User.objects.filter(email=email).exists():
-                messages.info(request, 'Gegevens zijn verkeerd')
+        if password == password2: # Als de 2 ingevoerde wachtwoorden gelijk zijn dan ...
+            if User.objects.filter(email=email).exists(): # Bestaat er al een account met dit mail adres
+                messages.info(request, 'Gegevens zijn verkeerd') # 
                 return redirect('aanmelden')
             elif User.objects.filter(username=username).exists():
                 messages.info(request, 'Gegevens zijn verkeerd')
