@@ -420,7 +420,7 @@ Nu moeten wij nog zorgen dat je ook kan inloggen.
 Voeg deze code toe aan /core/views.py.
 
 ```python
-def signin(request):
+def login(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -431,9 +431,81 @@ def signin(request):
             auth.login(request, user)
             return redirect("/")
         else:
-            messages.info(request, "Credentials Invalid")
-            return redirect("signin")
+            messages.info(request, "Gegevens Ongeldig")
+            return redirect("/login")
         
     else:
-        return render(request, "signin.html")
+        return render(request, "login.html")
 ```
+
+
+Test nu of je een account kan maken en kan inloggen. Als je bent ingelogd  zie je de index.html site.
+
+Ga terug naar de terminal vul dit in.
+
+```bash
+python manage.py createsuperuser
+```
+
+Als je dit invuld moet je nog wat andere gegevens invullen (Vul bij wachtwoord niet een veel gebruikt wachtwoord in). Als het goed is gegaan zie je iets zoals dit.
+
+```bash
+Username (leave blank to use 'codespace'): *********
+Email address: ****@*********.***
+Password: 
+Password (again): 
+Superuser created successfully.
+```
+
+Op de sterretjes staan dan de zojuist ingevulde gegevens.
+
+Start dan jouw site op. Vul dan achter de url /admin in. Log in met de zojuist aangemaakte account.
+
+Klik dan op users, vervolgens kan je op iemands gebruikersnaam klikken om hun informatie te zien, je kan daar allerlei gegevens bewerken.
+
+
+Als jij wilt dat je jouw site aleen kan zien als je bent ingelogd, ga dan naar /core/views.py, importeer dan deze libery.
+
+```python
+from django.contrib.auth.decorators import login_required
+```
+
+Voor alle views die je wilt beveiligen met een login type dan deze regel boven de view.
+
+```python
+@login_required(login_url="login")
+```
+
+Probeer die regel eens boven def index() te zetten. Als je nu naar jouw site gaat zal je zien dat je nog steeds op de hoofdpagina kan. Dat komt omdat je nog steeds bent ingelogd.
+
+Nu zijn er 3 dingen die je kunt doen:
+1. Verwijder je browsers cookies
+2. Gebruik incognito mode
+3. Maak een uitlog functie in jouw django site
+
+Wij gaan natuurlijk voor 3. 
+
+<h3>Uitloggen</h3>
+
+Om een uitlog functie toe te voegen aan jouw site moet je eerst een url toevoegen, doe dat met de naam uitloggen.
+
+Voeg dan deze uitlog functie toe aan /core/views.py.
+
+```python
+@login_required(login_url="login")
+def uitloggen(request):
+    auth.logout(request)
+    return redirect("login")
+```
+
+Voeg daarboven ook de regel toe die zorgt dat je ingelogd moet zijn om bij die site te kunnen, want anders kan dat rare effecten hebben op jouw site.
+
+Als je wilt kan je nu in jouw html code een knop toevoegen die mensen laat uitloggen, die code zou er dan ongeveer zo uitzien.
+
+```html
+<form action="/uitloggen" method="POST">
+    {% csrf_token %}
+    <button type="submit">Uitloggen</button>
+</form>
+```
+
