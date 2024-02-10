@@ -346,30 +346,30 @@ def aanmelden(request): # View voor aanmelden
 
         if password == password2: # Als de 2 ingevoerde wachtwoorden gelijk zijn dan ...
             if User.objects.filter(email=email).exists(): # Bestaat er al een account met dit mail adres
-                messages.info(request, 'Gegevens zijn verkeerd') # 
-                return redirect('aanmelden')
-            elif User.objects.filter(username=username).exists():
-                messages.info(request, 'Gegevens zijn verkeerd')
-                return redirect('login')
-            else:
-                user = User.objects.create_user(username=username, email=email, password=password)
-                user.save()
+                messages.info(request, 'Gegevens zijn verkeerd') # Laat in html foutmelding zien
+                return redirect('aanmelden') # Reload de site
+            elif User.objects.filter(username=username).exists(): # Bestaat deze gebruikersnaam al?
+                messages.info(request, 'Gegevens zijn verkeerd') # Laat in html foutmelding zien
+                return redirect('login') # Ga naar de login pagina
+            else: # Als er een account aangemaakt kan worden
+                user = User.objects.create_user(username=username, email=email, password=password) # Maak de gebruiker aan in de database
+                user.save() # Sla de gebruiker op
 
-                #log user in and redirect to settings page
-                user_login = auth.authenticate(username=username, password=password)
-                auth.login(request, user_login)
+                user_login = auth.authenticate(username=username, password=password) # Sla de gebruiker info op in deze variabele
+                auth.login(request, user_login) # Log in
 
-                #create a Profile object for the new user
-                user_model = User.objects.get(username=username)
+                # Dit onderstaande stuk is om de informatie te koppelen aan het profiel
+                user_model = User.objects.get(username=username) 
                 new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
                 new_profile.save()
-                return redirect('login')
+
+                return redirect('login') # Laad de login pagina
         else:
-            messages.info(request, 'Wachtwoorden verschillen')
-            return redirect('aanmelden')
+            messages.info(request, 'Wachtwoorden verschillen') # Laat in html foutmelding zien
+            return redirect('aanmelden') # Reload de pagina
         
     else:
-        return render(request, 'aanmelden.html')
+        return render(request, 'aanmelden.html') # Als er geen POST is gebruikt, reload de pagina
 ```
 
 Wat dit doet is het kijkt of er een formulier is ingevuld en als dat is kijk hij naar de gegevens die mee gestuurd worden.
@@ -377,7 +377,7 @@ Wat dit doet is het kijkt of er een formulier is ingevuld en als dat is kijk hij
 Importeer ook models.py in views.py.
 
 ```python
-from .models import Profile
+from .models import Profile # Importeer de database Profile
 ```
 
 Zoals je misschien is opgevallen zie je dat er 3 regels code in staan die met messages.info() werken. Zo kan je een error of een melding aan de user laten zien.
@@ -386,13 +386,13 @@ Voeg boven beide formulieren (van aanmelden.html en login.html) dit stukje code 
 
 ```html
 <div>
-    <style>
-        h5{
-            color: red;
+    <style> /* CSS */
+        h5{ /*Deze css is voor alle h5 headers*/
+            color: red; /*De kleur van de tekst*/
         }
     </style>
-    {% for message in messages %}
-    <h5>{{message}}</h5>
+    {% for message in messages %} <!--Deze tekst kan via django aangeroepen worden-->
+    <h5>{{message}}</h5> <!--Hier komt het bericht vanuit django-->
     {% endfor %}
 </div>
 ```
@@ -467,13 +467,13 @@ Klik dan op users, vervolgens kan je op iemands gebruikersnaam klikken om hun in
 Als jij wilt dat je jouw site aleen kan zien als je bent ingelogd, ga dan naar /core/views.py, importeer dan deze libery.
 
 ```python
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required # Importeer een module om inloggen verplicht te maken
 ```
 
 Voor alle views die je wilt beveiligen met een login type dan deze regel boven de view.
 
 ```python
-@login_required(login_url="login")
+@login_required(login_url="login") # Verplicht het om in te loggen
 ```
 
 Probeer die regel eens boven def index() te zetten. Als je nu naar jouw site gaat zal je zien dat je nog steeds op de hoofdpagina kan. Dat komt omdat je nog steeds bent ingelogd.
@@ -492,10 +492,10 @@ Om een uitlog functie toe te voegen aan jouw site moet je eerst een url toevoege
 Voeg dan deze uitlog functie toe aan /core/views.py.
 
 ```python
-@login_required(login_url="login")
-def uitloggen(request):
-    auth.logout(request)
-    return redirect("login")
+@login_required(login_url="login") # Verplicht login
+def uitloggen(request): # View voor uitloggen
+    auth.logout(request) # Loguit
+    return redirect("login") # Ga naar de login pagina
 ```
 
 Voeg daarboven ook de regel toe die zorgt dat je ingelogd moet zijn om bij die site te kunnen, want anders kan dat rare effecten hebben op jouw site.
@@ -503,9 +503,10 @@ Voeg daarboven ook de regel toe die zorgt dat je ingelogd moet zijn om bij die s
 Als je wilt kan je nu in jouw html code een knop toevoegen die mensen laat uitloggen, die code zou er dan ongeveer zo uitzien.
 
 ```html
-<form action="/uitloggen" method="POST">
-    {% csrf_token %}
-    <button type="submit">Uitloggen</button>
+<form action="/uitloggen" method="POST"> <!--Action is /uitloggen zodat als je op de submit knop drukt dat je daar naartoe gaat.-->
+    {% csrf_token %} <!--Tegen csrf-->
+    <button type="submit">Uitloggen</button> <!--Submit knop-->
 </form>
 ```
 
+<h3>Database algemeen</h3>
