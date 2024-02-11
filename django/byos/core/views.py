@@ -4,9 +4,10 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib .auth.models import User, auth
 from django.contrib import messages
-from .models import Profile
 
 from django.contrib.auth.decorators import login_required
+
+from .models import *
 
 @login_required(login_url="login")
 def index(request):
@@ -37,10 +38,7 @@ def aanmelden(request):
                 user_login = auth.authenticate(username=username, password=password)
                 auth.login(request, user_login)
 
-                #create a Profile object for the new user
-                user_model = User.objects.get(username=username)
-                new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
-                new_profile.save()
+
                 return redirect('login')
         else:
             messages.info(request, 'Wachtwoorden verschillen')
@@ -71,3 +69,8 @@ def login(request):
 def uitloggen(request):
     auth.logout(request)
     return redirect("login")
+
+@login_required(login_url="login")
+def post_list(request):
+    posts = Post.objects.all()
+    return render(request, 'post_list.html', {'posts': posts})

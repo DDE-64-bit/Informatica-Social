@@ -318,29 +318,6 @@ Als je dat hebt ziet je code er ongeveer zo uit (wel met css).
 
 Nu gaan je weer naar /core/urls.py, voeg daar een path toe voor aanmelden.
 
-Ga dan naar /core/models.py, importeer daar deze libery.
-
-```python
-from django.contrib.auth import get_user_model # Om de standaart user database te importeren
-```
-
-Voeg daarna deze code toe.
-
-```python
-user = get_user_model() # Om bij het usermodel te komen
-```
-
-Dit maakt een variable aan die user heet en die is gelijk aan de return van get_user_model(), dat is de standaart inlog functie van django. Maak daaronder een class aan die er zo uitziet.
-
-```python
-class Profile(models.Model): # Maak een class om Profielen te maken
-    user = models.ForeignKey(user, on_delete=models.CASCADE) # Voeg een gebruikers veld toe
-    id_user = models.IntegerField() # Voeg een id veld toe
-    
-    def __str__(self):
-        return self.user.username # Stuur de hele gebruiker terug
-```
-
 Ga daarna naar views.py, voeg daar deze code toe.
 
 ```python
@@ -365,11 +342,6 @@ def aanmelden(request): # View voor aanmelden
                 user_login = auth.authenticate(username=username, password=password) # Sla de gebruiker info op in deze variabele
                 auth.login(request, user_login) # Log in
 
-                # Dit onderstaande stuk is om de informatie te koppelen aan het profiel
-                user_model = User.objects.get(username=username) 
-                new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
-                new_profile.save()
-
                 return redirect('login') # Laad de login pagina
         else:
             messages.info(request, 'Wachtwoorden verschillen') # Laat in html foutmelding zien
@@ -384,7 +356,7 @@ Wat dit doet is het kijkt of er een formulier is ingevuld en als dat is kijk hij
 Importeer ook models.py in views.py.
 
 ```python
-from .models import Profile # Importeer de database Profile
+from .models import * # Importeer models
 ```
 
 Zoals je misschien is opgevallen zie je dat er 3 regels code in staan die met messages.info() werken. Zo kan je een error of een melding aan de user laten zien.
@@ -519,3 +491,73 @@ Als je wilt kan je nu in jouw html code een knop toevoegen die mensen laat uitlo
 <h3>Database algemeen</h3>
 
 Je kan voor veel andere doeleinden ook een database gebruiken, hieronder ga je zien hoe jij zelf een database kan gebruiken voor jouw eigen idee.
+
+Nu gaan wij als voorbeeld een paar blog posts laten zien.
+
+Ga dan naar /core/models.py, Voeg deze code toe.
+
+```python
+class Post(models.Model):
+    titel = models.CharField(max_length=200)
+    inhoud = models.TextField()
+    gemaakt_op = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.titel
+```
+
+Ga nu naar /core/admin.py en voeg daar dit toe.
+
+```python
+from .models import Post
+
+admin.site.register(Post)
+```
+
+Zodat je die database op jouw admin menu kan zien.
+
+Migreer nu je aanpassingen door dit in je terminal te typen.
+
+```bash 
+python manage.py makemigrations
+```
+
+Om de veranderingen op te slaan, en:
+
+```bash
+python manage.py migrate
+```
+
+Om de veranderingen te updaten naar de database.
+
+Start dan jouw site op en ga naar het admin menu, als het goed is zie je "core" staan en daaronder "Posts", druk dan op Post. Daar staat nog niets.
+
+Maak nu een nieuw bestand aan genaamd post_list.html in de templates folder. Voeg daar deze html code toe.
+
+```html
+<h1>Blog Posts</h1>
+<ul>
+    {% for post in posts %}
+        <li>{{ post.titel }}</li>
+    {% endfor %}
+</ul>
+```
+
+Ga dan naar /core/views.py en voeg daar deze functie toe.
+
+```python
+@login_required(login_url="login")
+def post_list(request):
+    posts = Post.objects.all()
+    return render(request, 'post_list.html', {'posts': posts})
+```
+
+Ga dan naar /core/urls.py en maak een url aan naar deze view, zoals hieronder.
+
+```python
+    path('post_list', views.post_list, name='post_list'), 
+```
+
+Start je website en ga naar de url. Als alles goed is gegaan zie je nog geen posts, die gaan we nu maken.
+
+Ga naar je admin menu en druk dan onder "core" op "+ Add". Voeg een titel en inhoud toe, sla je post op en ga naar je 

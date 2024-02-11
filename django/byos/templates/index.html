@@ -10,5 +10,9 @@
         {% csrf_token %} <!--Tegen csrf-->
         <button type="submit">Uitloggen</button> <!--Submit knop-->
     </form>
+    <form action="/post_list" method="POST"> <!--Action is /uitloggen zodat als je op de submit knop drukt dat je daar naartoe gaat.-->
+        {% csrf_token %} <!--Tegen csrf-->
+        <button type="submit">Posts</button> <!--Submit knop-->
+    </form>
 </body>
 </html>

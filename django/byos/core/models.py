@@ -1,12 +1,9 @@
 from django.db import models
 
-from django.contrib.auth import get_user_model
-
-user = get_user_model()
-
-class Profile(models.Model):
-    user = models.OneToOneField(user, on_delete=models.CASCADE)
-    id_user = models.IntegerField()
+class Post(models.Model):
+    titel = models.CharField(max_length=200)
+    inhoud = models.TextField()
+    gemaakt_op = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username
+        return self.titel
