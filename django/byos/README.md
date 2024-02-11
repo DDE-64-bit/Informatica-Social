@@ -1,6 +1,6 @@
 <h1>Project opzetten</h1>
 
-
+Om te beginnen met django moet je eerst een 
 django-admin startproject "projectname"
 
 django-admin startapp core
@@ -510,3 +510,6 @@ Als je wilt kan je nu in jouw html code een knop toevoegen die mensen laat uitlo
 ```
 
 <h3>Database algemeen</h3>
+
+Je kan voor veel andere doeleinden ook een database gebruiken, hieronder ga je zien hoe jij zelf een database kan gebruiken voor jouw eigen idee
+
