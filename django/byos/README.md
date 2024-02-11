@@ -1,13 +1,21 @@
 <h1>Project opzetten</h1>
 
-Om te beginnen met django moet je eerst een 
+Om te beginnen met django moet je eerst een project aanmaken. Ga naar de locatie waar het project moet komen. Type dan dit in de terminal.
+```bash 
 django-admin startproject "projectname"
+```
 
+Hiermee maak je een django project aan. 
+
+Nu moet je nog een app hebben in jouw project, dit is de plek waar jij gaat werken. Vul het onderstaande in.
+```bash
 django-admin startapp core
+```
 
-ga naar /core en maak het bestand urls.py
+Ga dan naar /core en maak een bestand genaamd urls.py aan.
 
-voeg deze code toe aan het bestand /core/urls.py
+Voeg deze code toe aan het bestand /core/urls.py.
+
 ``` python
 from django.urls import path # Om url's te gaan gebruiken
 from . import views # Alle views importeren
@@ -17,12 +25,12 @@ urlpatterns = [
 ]
 ```
 
-nu heb je een url aangemaakt voor de hoofd pagina van jouw site. 
+Nu heb je een url aangemaakt voor de hoofd pagina van jouw site. 
 
-ga  nu naar /core/views.py.
+Ga dan naar /core/views.py.
 
 
-importeer deze libery's.
+Importeer deze libery's.
 
 ```python
 from django.shortcuts import render # Om html te laden
@@ -32,7 +40,6 @@ from django.shortcuts import redirect # Om door te verwijzen
 from django.contrib .auth.models import User, auth # Om in te loggen
 from django.contrib import messages # Om vanaf python een bericht in html laten zien
 ```
-
 
 Voeg dan deze code toe om een view te maken.
 
@@ -511,5 +518,4 @@ Als je wilt kan je nu in jouw html code een knop toevoegen die mensen laat uitlo
 
 <h3>Database algemeen</h3>
 
-Je kan voor veel andere doeleinden ook een database gebruiken, hieronder ga je zien hoe jij zelf een database kan gebruiken voor jouw eigen idee
-
+Je kan voor veel andere doeleinden ook een database gebruiken, hieronder ga je zien hoe jij zelf een database kan gebruiken voor jouw eigen idee.
