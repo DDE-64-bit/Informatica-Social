@@ -1,1 +1,0 @@
-SELECT id FROM auth_user WHERE username ="19200";
