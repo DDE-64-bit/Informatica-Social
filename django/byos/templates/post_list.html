@@ -9,7 +9,9 @@
     <h1>Blog Posts</h1>
     <ul>
         {% for post in posts %}
-            <li>{{ post.titel }}</li>
+            <li>{{ post.titel }} <br>
+                {{ post.inhoud }}
+            </li>
         {% endfor %}
     </ul>
 </body>

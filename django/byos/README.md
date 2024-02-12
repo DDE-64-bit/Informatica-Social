@@ -497,21 +497,21 @@ Nu gaan wij als voorbeeld een paar blog posts laten zien.
 Ga dan naar /core/models.py, Voeg deze code toe.
 
 ```python
-class Post(models.Model):
-    titel = models.CharField(max_length=200)
-    inhoud = models.TextField()
-    gemaakt_op = models.DateTimeField(auto_now_add=True)
+class Post(models.Model): # Maakt een class genaamd post
+    titel = models.CharField(max_length=200) # Veld voor de titel, met teken limiet
+    inhoud = models.TextField() # Veld voor inhoud, zonder teken limiet
+    gemaakt_op = models.DateTimeField(auto_now_add=True) # Veld voor datum (voegt automatisch toe)
 
     def __str__(self):
-        return self.titel
+        return self.titel # Stuur de titel terug
 ```
 
 Ga nu naar /core/admin.py en voeg daar dit toe.
 
 ```python
-from .models import Post
+from .models import Post # Importeer het model
 
-admin.site.register(Post)
+admin.site.register(Post) # Zorg dat je bij de database kan via het admin menu
 ```
 
 Zodat je die database op jouw admin menu kan zien.
@@ -535,29 +535,34 @@ Start dan jouw site op en ga naar het admin menu, als het goed is zie je "core" 
 Maak nu een nieuw bestand aan genaamd post_list.html in de templates folder. Voeg daar deze html code toe.
 
 ```html
-<h1>Blog Posts</h1>
-<ul>
-    {% for post in posts %}
-        <li>{{ post.titel }}</li>
-    {% endfor %}
+<h1>Blog Posts</h1> <!--Titel tekst boven lijst-->
+<ul> <!--Ongesorteerde lijst-->
+    {% for post in posts %} <!--Maak een link met django-->
+        <li> <!--Lijst op volgorde-->
+            {{ post.titel }}  <!--Laat de titel zien-->
+            <br> <!--Een witregel-->
+            {{ post.inhoud }} <!--Laat de inhoud zien-->
+        </li>
+    {% endfor %} <!--Einde link met django-->
 </ul>
 ```
 
 Ga dan naar /core/views.py en voeg daar deze functie toe.
 
 ```python
-@login_required(login_url="login")
-def post_list(request):
-    posts = Post.objects.all()
-    return render(request, 'post_list.html', {'posts': posts})
+@login_required(login_url="login") # Verplicht login
+def post_list(request): # Maak een view aan
+    posts = Post.objects.all() # Importeer alle posts
+    return render(request, 'post_list.html', {'posts': posts}) # Stuur html en posts naar de html
 ```
 
 Ga dan naar /core/urls.py en maak een url aan naar deze view, zoals hieronder.
 
 ```python
-    path('post_list', views.post_list, name='post_list'), 
+    path('post_list', views.post_list, name='post_list'), # Maakt url aan
 ```
 
 Start je website en ga naar de url. Als alles goed is gegaan zie je nog geen posts, die gaan we nu maken.
 
-Ga naar je admin menu en druk dan onder "core" op "+ Add". Voeg een titel en inhoud toe, sla je post op en ga naar je 
+Ga naar je admin menu en druk dan onder "core" op "+ Add". Voeg een titel en inhoud toe, sla je post op en ga naar je site, dan die je de naam van de post en de inhoud.
+
