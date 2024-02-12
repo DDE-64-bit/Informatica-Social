@@ -418,7 +418,6 @@ def login(request): # View van login
         return render(request, "login.html") # Laat de pagina login.html zien
 ```
 
-
 Test nu of je een account kan maken en kan inloggen. Als je bent ingelogd  zie je de index.html site.
 
 Ga terug naar de terminal vul dit in.
