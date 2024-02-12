@@ -399,22 +399,23 @@ Nu moeten wij nog zorgen dat je ook kan inloggen.
 Voeg deze code toe aan /core/views.py.
 
 ```python
-def login(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
+def login(request): # View van login
+    if request.method == "POST": # Als er een formulier met de methode POST word gestuurd dan...
+        username = request.POST['username'] # Haal veld username op van de html
+        password = request.POST['password'] # Haal veld password op van de html
 
-        user = auth.authenticate(username=username, password=password)
+        user = auth.authenticate # Maakt een list aan met de username en password
+        (username=username, password=password)
 
-        if user is not None: # kijkt of de user bestaat
-            auth.login(request, user)
-            return redirect("/")
-        else:
-            messages.info(request, "Gegevens Ongeldig")
-            return redirect("/login")
+        if user is not None: # Kijkt of de user bestaat
+            auth.login(request, user) # Login
+            return redirect("/") # Ga naar de hoofdpagina
+        else: # Als de user niet bestaat dan...
+            messages.info(request, "Gegevens Ongeldig") # Geef melding in html
+            return redirect("/login") # Reload de pagina
         
-    else:
-        return render(request, "login.html")
+    else: # Als er geen formulier is gestuurd dan...
+        return render(request, "login.html") # Laat de pagina login.html zien
 ```
 
 
