@@ -566,3 +566,10 @@ Start je website en ga naar de url. Als alles goed is gegaan zie je nog geen pos
 
 Ga naar je admin menu en druk dan onder "core" op "+ Add". Voeg een titel en inhoud toe, sla je post op en ga naar je site, dan die je de naam van de post en de inhoud.
 
+Dit was een simpel voorbeeld voor een blog, als je een database voor iets ander wilt aanmaken kan je de onderstaande stappen gebruiken.
+
+1. Maak een model.
+2. Voeg het model toe aan admin.py.
+3. Maak een view aan.
+4. Maak een url aan.
+5. Maak er een template voor
