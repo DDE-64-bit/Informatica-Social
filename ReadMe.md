@@ -1,3 +1,6 @@
+**Maak de uitleg beter**
+
+
 pip install django
 
 django-admin startproject social
