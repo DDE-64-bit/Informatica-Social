@@ -1,5 +1,6 @@
 **Maak de uitleg beter**
 
+Note: maak het simpeler
 
 pip install django
 
